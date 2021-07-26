@@ -1,7 +1,7 @@
 Package: tidytreatment
 Type: Package
 Title: Tidy Methods for Bayesian Treatment Effect Models
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person("Joshua J", "Bon", email = "joshuajbon@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0003-2313-2949"))
@@ -11,6 +11,7 @@ LazyData: true
 License: MIT + file LICENSE
 URL: https://github.com/bonStats/tidytreatment
 BugReports: https://github.com/bonStats/tidytreatment/issues
+Language: en-US
 Depends: R (>= 3.1.0)
 Suggests: knitr, rmarkdown, BART, ggplot2, testthat (>= 3.0.0), withr
 VignetteBuilder: knitr
@@ -19,8 +20,8 @@ Imports: tidybayes, purrr, tidyr, dplyr, readr, rlang
 Enhances: bartMachine
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-06-22 10:59:04 UTC; bon
+Packaged: 2021-07-26 01:40:41 UTC; joshua
 Author: Joshua J Bon [aut, cre] (<https://orcid.org/0000-0003-2313-2949>)
 Maintainer: Joshua J Bon <joshuajbon@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-06-23 06:50:02 UTC
+Date/Publication: 2021-07-26 06:00:02 UTC
