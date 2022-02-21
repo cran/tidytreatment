@@ -193,7 +193,7 @@ posterior_treat_eff_on_treated %>%
 posterior_treat_eff %>% select(-z) %>% point_interval() %>%
   arrange(cte) %>% mutate(.orow = 1:n()) %>% 
   ggplot() + 
-  geom_interval(aes(x = .orow, y= cte), size = 0.5) +
+  geom_interval(aes(x = .orow, y= cte, ymin = .lower, ymax = .upper)) +
   geom_point(aes(x = .orow, y = cte), shape = "circle open", alpha = 0.5) + 
   ylab("Median posterior CATE for each subject (95% CI)") +
   theme_bw() + coord_flip() + scale_colour_brewer() +

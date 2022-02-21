@@ -1,7 +1,7 @@
-00df4c1cb39f6871aad907f770b011e4 *DESCRIPTION
+7b4ad8efb7dd00d0de53daff85c0da23 *DESCRIPTION
 e58af2c5b95da4809f5678df2b13c8b0 *LICENSE
 8b21db717cebf7250f528493a09c6cd5 *NAMESPACE
-61b9eb312e691bdd6b8255f85d1ebb94 *NEWS.md
+f396ef636f9451d97032ab182343c7ab *NEWS.md
 0568377c06998e9d8fd9116d4efa4527 *R/average-treatment-effects-posterior.R
 5622fee475d1e13cd17926849f11b8b3 *R/common-support.R
 c4418b3b71384aaee0d1a6f3401e784d *R/covariate-importance.R
@@ -16,15 +16,15 @@ a13242eca0885c8d94b84bb805b20850 *R/tidy-posterior-BART.R
 1931cba29b550d39dc9ea10c06ed0eb1 *R/tidytreatment-package.R
 9de1912be4b79562904f492dcf462642 *R/treatment-effects-posterior.R
 8400669480b1bac1312dfbbfbafd7a70 *R/tree-extract-BART.R
-7fbe6a73c2779029cc767109fa0d350d *README.md
-46d85d4bc0bd7810db1721821c9b14d3 *build/vignette.rds
+18220643be2950ce97f395ab43cf3e61 *README.md
+59cb35918abfd7b2e115d65d9763cf70 *build/vignette.rds
 0b01098c67156c404a0f22642b253e8d *data/bartmodel1.rda
 532579f4b4aa2d7df83b19b260c3669c *data/bartmodel1_modelmatrix.rda
 18ef8d4102b244b2fb59d5d7314adaf3 *data/highDim_testdataset3.rda
 4d044ca2dab4fac8cdb2f55032fff92d *data/suhillsim1.rda
-94d8fb23c1aaac86d9b6202b840efd3d *inst/doc/use-tidytreatment-BART.R
-61072975f04b7c2ab066e16a3bd10cb2 *inst/doc/use-tidytreatment-BART.Rmd
-5152c53153303969a1df6cb3b0b1abb8 *inst/doc/use-tidytreatment-BART.html
+8cecb3be8c2078c4abf2c1a47964d452 *inst/doc/use-tidytreatment-BART.R
+425b1b24d043d8f0e33667330b27b420 *inst/doc/use-tidytreatment-BART.Rmd
+5c592af85ef2e71764b685f9495f848f *inst/doc/use-tidytreatment-BART.html
 67a0f471c25ea18b33c04d66107345e6 *man/avg_treatment_effects.Rd
 c16ebb582c6a74eb9103faa63cac9f9d *man/bartmodel1.Rd
 af3dca54cf41b1815607af0179e2f412 *man/bartmodel1_modelmatrix.Rd
@@ -62,5 +62,5 @@ e8000c0e47f41db2056fa152a113a236 *tests/testthat/test-fitted.R
 6c55f5bf6340375968aa18f6aff3810e *tests/testthat/test-predict.R
 bac071ebaaa66cf3e7aae22837a1f33a *tests/testthat/test-residuals.R
 008e48bb1a6bb89a77b447d8fff6d8e4 *tests/testthat/test-treatment-effects.R
-61072975f04b7c2ab066e16a3bd10cb2 *vignettes/use-tidytreatment-BART.Rmd
+425b1b24d043d8f0e33667330b27b420 *vignettes/use-tidytreatment-BART.Rmd
 a471a063770270a45464200230d75abf *vignettes/vignette.bib

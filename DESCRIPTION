@@ -1,7 +1,7 @@
 Package: tidytreatment
 Type: Package
 Title: Tidy Methods for Bayesian Treatment Effect Models
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Joshua J", "Bon", email = "joshuajbon@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0003-2313-2949"))
@@ -20,8 +20,8 @@ Imports: tidybayes, purrr, tidyr, dplyr, readr, rlang
 Enhances: bartMachine
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-07-26 01:40:41 UTC; joshua
+Packaged: 2022-02-19 09:56:06 UTC; bon
 Author: Joshua J Bon [aut, cre] (<https://orcid.org/0000-0003-2313-2949>)
 Maintainer: Joshua J Bon <joshuajbon@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-07-26 06:00:02 UTC
+Date/Publication: 2022-02-21 09:00:07 UTC
