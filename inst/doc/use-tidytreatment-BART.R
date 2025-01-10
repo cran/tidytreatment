@@ -23,23 +23,23 @@ suppressPackageStartupMessages({
   
 
 ## ----load-data-print, echo = TRUE, eval = FALSE-------------------------------
-#  
-#  # load packages
-#  library(BART)
-#  library(tidytreatment)
-#  library(dplyr)
-#  library(tidybayes)
-#  library(ggplot2)
-#  
-#  # set seed so vignette is reproducible
-#  set.seed(101)
-#  
-#  # simulate data
-#  sim <- simulate_su_hill_data(n = 100, treatment_linear = FALSE,  omega = 0, add_categorical = TRUE,
-#                               coef_categorical_treatment = c(0,0,1),
-#                               coef_categorical_nontreatment = c(-1,0,-1)
-#  )
-#  
+# 
+# # load packages
+# library(BART)
+# library(tidytreatment)
+# library(dplyr)
+# library(tidybayes)
+# library(ggplot2)
+# 
+# # set seed so vignette is reproducible
+# set.seed(101)
+# 
+# # simulate data
+# sim <- simulate_su_hill_data(n = 100, treatment_linear = FALSE,  omega = 0, add_categorical = TRUE,
+#                              coef_categorical_treatment = c(0,0,1),
+#                              coef_categorical_nontreatment = c(-1,0,-1)
+# )
+# 
 
 ## ----data-summary, echo = TRUE, eval = TRUE-----------------------------------
 
@@ -52,50 +52,50 @@ dat %>% select(y, z, c1, x1:x3) %>% head()
 
 
 ## ----run-bart, echo = TRUE, eval = FALSE--------------------------------------
-#  
-#  # STEP 1 VS Model: Regress y ~ covariates
-#  var_select_bart <- wbart(x.train = select(dat,-y,-z),
-#                           y.train = pull(dat, y),
-#                           sparse = TRUE,
-#                           nskip = 2000,
-#                           ndpost = 5000)
-#  
-#  # STEP 2: Variable selection
-#    # select most important vars from y ~ covariates model
-#    # very simple selection mechanism. Should use cross-validation in practice
-#  covar_ranking <- covariate_importance(var_select_bart)
-#  var_select <- covar_ranking %>%
-#    filter(avg_inclusion >= quantile(avg_inclusion, 0.5)) %>%
-#    pull(variable)
-#  
-#  # change categorical variables to just one variable
-#  var_select <- unique(gsub("c1[1-3]$","c1", var_select))
-#  
-#  var_select
-#  
-#  # STEP 3 PS Model: Regress z ~ selected covariates
-#    # BART::pbart is for probit regression
-#  prop_bart <- pbart(
-#    x.train = select(dat, all_of(var_select)),
-#    y.train = pull(dat, z),
-#    nskip = 2000,
-#    ndpost = 5000
-#  )
-#  
-#  # store propensity score in data
-#  dat$prop_score <-  prop_bart$prob.train.mean
-#  
-#  # Step 4 TE Model: Regress y ~ z + covariates + propensity score
-#  te_model <- wbart(
-#    x.train = select(dat,-y),
-#    y.train = pull(dat, y),
-#    nskip = 10000L,
-#    ndpost = 200L, #*
-#    keepevery = 100L #*
-#  )
-#  
-#  #* The posterior samples are kept small to manage size on CRAN
-#  
+# 
+# # STEP 1 VS Model: Regress y ~ covariates
+# var_select_bart <- wbart(x.train = select(dat,-y,-z),
+#                          y.train = pull(dat, y),
+#                          sparse = TRUE,
+#                          nskip = 2000,
+#                          ndpost = 5000)
+# 
+# # STEP 2: Variable selection
+#   # select most important vars from y ~ covariates model
+#   # very simple selection mechanism. Should use cross-validation in practice
+# covar_ranking <- covariate_importance(var_select_bart)
+# var_select <- covar_ranking %>%
+#   filter(avg_inclusion >= quantile(avg_inclusion, 0.5)) %>%
+#   pull(variable)
+# 
+# # change categorical variables to just one variable
+# var_select <- unique(gsub("c1[1-3]$","c1", var_select))
+# 
+# var_select
+# 
+# # STEP 3 PS Model: Regress z ~ selected covariates
+#   # BART::pbart is for probit regression
+# prop_bart <- pbart(
+#   x.train = select(dat, all_of(var_select)),
+#   y.train = pull(dat, z),
+#   nskip = 2000,
+#   ndpost = 5000
+# )
+# 
+# # store propensity score in data
+# dat$prop_score <-  prop_bart$prob.train.mean
+# 
+# # Step 4 TE Model: Regress y ~ z + covariates + propensity score
+# te_model <- wbart(
+#   x.train = select(dat,-y),
+#   y.train = pull(dat, y),
+#   nskip = 10000L,
+#   ndpost = 200L, #*
+#   keepevery = 100L #*
+# )
+# 
+# #* The posterior samples are kept small to manage size on CRAN
+# 
 
 ## ----tidy-bart-fit, echo=TRUE, cache=FALSE------------------------------------
 
@@ -109,10 +109,10 @@ posterior_fitted
 
 
 ## ----tidy-bart-pred, eval=FALSE, echo=TRUE, cache=FALSE-----------------------
-#  
-#  # Function to tidy predicted draws also, this adds random normal noise by default
-#  posterior_pred <- predicted_draws(te_model, include_newdata = FALSE)
-#  
+# 
+# # Function to tidy predicted draws also, this adds random normal noise by default
+# posterior_pred <- predicted_draws(te_model, include_newdata = FALSE)
+# 
 
 ## ----plot-tidy-bart, echo=TRUE, cache=FALSE-----------------------------------
 
@@ -131,11 +131,11 @@ posterior_fitted %>%
 
 
 ## ----post-treatment, eval = FALSE---------------------------------------------
-#  
-#  # sample based (using data from fit) conditional treatment effects, posterior draws
-#  posterior_treat_eff <-
-#    treatment_effects(te_model, treatment = "z", newdata = dat)
-#  
+# 
+# # sample based (using data from fit) conditional treatment effects, posterior draws
+# posterior_treat_eff <-
+#   treatment_effects(te_model, treatment = "z", newdata = dat)
+# 
 
 ## ----cates-hist, echo=TRUE, cache=FALSE---------------------------------------
 
@@ -153,11 +153,11 @@ posterior_treat_eff %>% summarise(cte_hat = median(cte)) %>%
 
 
 ## ----att-ate, eval=FALSE------------------------------------------------------
-#  # get the ATE and ATT directly:
-#  
-#  posterior_ate <- tidy_ate(te_model, treatment = "z", newdata = dat)
-#  posterior_att <- tidy_att(te_model, treatment = "z", newdata = dat)
-#  
+# # get the ATE and ATT directly:
+# 
+# posterior_ate <- tidy_ate(te_model, treatment = "z", newdata = dat)
+# posterior_att <- tidy_att(te_model, treatment = "z", newdata = dat)
+# 
 
 ## ----ate-trace-setup, eval = TRUE, echo = FALSE-------------------------------
 
@@ -174,11 +174,11 @@ posterior_ate %>% ggplot(aes(x = .draw, y = ate)) +
 
 
 ## ----post-te-treated, echo=TRUE, eval=FALSE-----------------------------------
-#  
-#  # sample based (using data from fit) conditional treatment effects, posterior draws
-#  posterior_treat_eff_on_treated <-
-#    treatment_effects(te_model, treatment = "z", newdata = dat, subset = "treated")
-#  
+# 
+# # sample based (using data from fit) conditional treatment effects, posterior draws
+# posterior_treat_eff_on_treated <-
+#   treatment_effects(te_model, treatment = "z", newdata = dat, subset = "treated")
+# 
 
 ## ----cates-hist-treated, echo=TRUE, cache=FALSE-------------------------------
 
