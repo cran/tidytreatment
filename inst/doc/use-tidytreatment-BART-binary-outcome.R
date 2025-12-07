@@ -40,6 +40,10 @@ suppressPackageStartupMessages({
 #                              coef_categorical_nontreatment = c(-1,0,-1)
 # )
 # 
+# # binary in this example
+# 
+# sim$data$y <- as.integer(sim$data$y > 2.7)
+# 
 
 ## ----data-summary, echo = TRUE, eval = TRUE-----------------------------------
 
@@ -54,14 +58,14 @@ dat %>% select(y, z, c1, x1:x3) %>% head()
 ## ----run-bart, echo = TRUE, eval = FALSE--------------------------------------
 # 
 # # STEP 1 VS Model: Regress y ~ covariates
-# var_select_bart <- wbart(x.train = select(dat,-y,-z),
+# var_select_bart <- pbart(x.train = select(dat,-y,-z),
 #                          y.train = pull(dat, y),
 #                          sparse = TRUE,
 #                          nskip = 2000,
 #                          ndpost = 5000)
 # 
 # # STEP 2: Variable selection
-#   # select most important vars from y ~ covariates model
+#   # Select most important vars from y ~ covariates model
 #   # Note: This is an overly simple selection mechanism.
 #   # See package {bartMan} vignettes and https://doi.org/10.52933/jdssv.v4i1.79
 #   # for discussion of variable importance methods.
@@ -88,7 +92,7 @@ dat %>% select(y, z, c1, x1:x3) %>% head()
 # dat$prop_score <-  prop_bart$prob.train.mean
 # 
 # # Step 4 TE Model: Regress y ~ z + covariates + propensity score
-# te_model <- wbart(
+# te_model <- pbart(
 #   x.train = select(dat,-y),
 #   y.train = pull(dat, y),
 #   nskip = 10000L,
@@ -101,7 +105,7 @@ dat %>% select(y, z, c1, x1:x3) %>% head()
 
 ## ----tidy-bart-fit, echo=TRUE, cache=FALSE------------------------------------
 
-posterior_fitted <- epred_draws(te_model, value = "fit", include_newdata = FALSE)
+posterior_fitted <- epred_draws(te_model, value = "fit", scale = "prob", include_newdata = FALSE)
 # include_newdata = FALSE, avoids returning the newdata with the fitted values
 # as it is so large. newdata argument must be specified for this option in BART models. 
 # The `.row` variable makes sure we know which row in the newdata the fitted
@@ -136,7 +140,7 @@ posterior_fitted %>%
 # 
 # # sample based (using data from fit) conditional treatment effects, posterior draws
 # posterior_treat_eff <-
-#   treatment_effects(te_model, treatment = "z", newdata = dat)
+#   treatment_effects(te_model, treatment = "z", scale = "prob", newdata = dat)
 # 
 
 ## ----cates-hist, echo=TRUE, cache=FALSE---------------------------------------
@@ -157,8 +161,8 @@ posterior_treat_eff %>% summarise(cte_hat = median(cte)) %>%
 ## ----att-ate, eval=FALSE------------------------------------------------------
 # # get the ATE and ATT directly:
 # 
-# posterior_ate <- tidy_ate(te_model, treatment = "z", newdata = dat)
-# posterior_att <- tidy_att(te_model, treatment = "z", newdata = dat)
+# posterior_ate <- tidy_ate(te_model, treatment = "z", scale = "prob", newdata = dat)
+# posterior_att <- tidy_att(te_model, treatment = "z", scale = "prob", newdata = dat)
 # 
 
 ## ----ate-trace-setup, eval = TRUE, echo = FALSE-------------------------------
@@ -218,6 +222,8 @@ posterior_treat_eff %>%
 
 
 ## ----common-support, echo=TRUE, results='hide', cache=FALSE-------------------
+
+# NOTE: common support calculated on linear scale (not probability scale for probit/logit)
 
 # calculate common support directly
 # argument 'modeldata' must be specified for BART models 
